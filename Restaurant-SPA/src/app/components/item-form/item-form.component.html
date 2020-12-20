@@ -1,0 +1,41 @@
+<form [formGroup]="ItemForm" autocomplete="off">
+    <!-------------------------tital----------------------------->
+    <div mat-dialog-title>
+      <h6>Add Item Form</h6>
+      <hr>
+    </div>
+    <!-------------------------contan---------------------------->
+    <div mat-dialog-content>
+      <mat-form-field class="full" appearance="outline" >
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="ItemId" readonly>
+      </mat-form-field>
+  
+      <mat-form-field class="full" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="ItemName">
+      </mat-form-field>
+      <!--Validation-->
+      <p *ngIf="ItemName().invalid &&
+                ItemName().touched" class="Erro-red">
+        Please Enter Item Name
+      </p>
+      <!-------------->
+      <mat-form-field class="full" appearance="outline">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="ItemPrice" type="number">
+      </mat-form-field>
+  
+      <!--Validation-->
+      <p *ngIf="ItemPrice().invalid &&
+      ItemPrice().touched" class="Erro-red">
+        Please Enter Item Price
+      </p>
+      <!-------------->
+    </div>
+    <!--------------------------action-------------------------->
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="onSubmit()">{{isUpdate}}</button>
+      <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    </div>
+  </form>

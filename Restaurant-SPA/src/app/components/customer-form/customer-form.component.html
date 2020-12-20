@@ -1,0 +1,25 @@
+<form [formGroup]="FrmCustomer" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-title>
+        <h6>Add Customer Form</h6>
+        <hr>
+    </div>
+    <div mat-dialog-content>
+        <mat-form-field class="full" appearance="outline">
+            <mat-label>ID</mat-label>
+            <input matInput formControlName="CustomerId" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="full" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="CustomerName">
+        </mat-form-field>
+        <p *ngIf="FrmCustomer.controls.CustomerName.invalid &&
+                FrmCustomer.get('CustomerName').touched" class="Erro-red">
+            Please Enter Customer Name
+        </p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" type="submit" >{{isUpdate}}</button>
+        <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    </div>
+</form>

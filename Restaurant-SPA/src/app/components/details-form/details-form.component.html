@@ -1,0 +1,51 @@
+<form [formGroup]="DetailsForm" autocomplete="off">
+    <!-------------------------tital----------------------------->
+    <div mat-dialog-title>
+        <h6>Order Food Item</h6>
+        <hr>
+    </div>
+    <!-------------------------contan---------------------------->
+    <div mat-dialog-content>
+        <div>
+            <!--Hidden fiald-->
+            <input type="hidden" formControlName="DetailsId">
+            <input type="hidden" formControlName="OrderId">
+            <input type="hidden" formControlName="ItemName">
+            <!---->
+            <mat-form-field class="full" appearance="outline">
+                <mat-label>Food</mat-label>
+                <mat-select formControlName="ItemId" (selectionChange)="updatePrice(ItemId().value)">
+                    <mat-option *ngFor="let item of itemList; let i = index" [value]="item.ItemId">
+                        {{ item.ItemName }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="!isValid && ItemId().value == 0"> Select Item Please</mat-error>
+
+
+            </mat-form-field>
+
+            <mat-form-field class="full" appearance="outline">
+                <mat-label>Price</mat-label>
+                <input matInput formControlName="ItemPrice" type="number" required>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="full" appearance="outline">
+                <mat-label>Quantity</mat-label>
+                <input matInput formControlName="DetailsQuantity" required type="number" (keyup)="updatTotal()">
+                <mat-error *ngIf="!isValid && DetailsQuantity().value == 0">Quantity is {{DetailsQuantity().value}} </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full" appearance="outline">
+                <mat-label>Total</mat-label>
+                <input matInput formControlName="Total" type="number" readonly>
+            </mat-form-field>
+        </div>
+
+    </div>
+    <!--------------------------action-------------------------->
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="onSubmit()">{{isUpdate}}</button>
+        <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    </div>
+</form>

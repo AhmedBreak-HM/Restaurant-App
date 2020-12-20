@@ -1,0 +1,96 @@
+<form [formGroup]="OrderForm" autocomplete="off">
+  <div>
+    <mat-form-field class="full" appearance="fill">
+      <mat-label>OrderNo</mat-label>
+      <input matInput formControlName="OrderNo" class="example-right-align" readonly>
+      <span matPrefix>#</span>
+    </mat-form-field>
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>Customer</mat-label>
+      <mat-select formControlName="CustomerId">
+        <mat-option value="0">Select Customer</mat-option>
+        <mat-option *ngFor="let item of customerList" [value]="item.CustomerId">{{ item.CustomerName }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="!isValid && CustomerId().value == 0"> Select Item Please</mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>Pmethod</mat-label>
+      <mat-select formControlName="Pmethod">
+        <mat-option value="Select">Select</mat-option>
+        <mat-option value="Cash">Cash</mat-option>
+        <mat-option value="Card">Card</mat-option>
+      </mat-select>
+      <mat-error *ngIf="!isValid && Pmethod().value == 'Select'"> Select method Please</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="full" appearance="fill">
+      <mat-label>Grand Total</mat-label>
+      <input matInput formControlName="Gtotal" class="example-right-align" readonly>
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-error *ngIf="!isValid && Gtotal().value == 0"> Total is {{Gtotal().value}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <table mat-table [dataSource]="dataSource" class="table">
+      <!-- ItemId Column -->
+      <ng-container matColumnDef="ItemId">
+        <th mat-header-cell *matHeaderCellDef> ID. </th>
+        <td mat-cell *matCellDef="let element"> {{element.ItemId}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="ItemName">
+        <th mat-header-cell *matHeaderCellDef> Item </th>
+        <td mat-cell *matCellDef="let element"> {{element.ItemName}} </td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="ItemPrice">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.ItemPrice}} </td>
+      </ng-container>
+
+      <!-- quantity Column -->
+      <ng-container matColumnDef="DetailsQuantity">
+        <th mat-header-cell *matHeaderCellDef> Quantity </th>
+        <td mat-cell *matCellDef="let element"> {{element.DetailsQuantity}} </td>
+      </ng-container>
+
+      <!-- Total Column -->
+      <ng-container matColumnDef="Total">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="customColumn">
+        <th mat-header-cell *matHeaderCellDef>
+          <button mat-raised-button color="primary" (click)="AddOrEdite(null)">
+            Create<mat-icon>create</mat-icon>
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="accent" (click)="AddOrEdite(1)">
+            Update<mat-icon>create</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="Delete()">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <!-- ------------------------------------------------------------- -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row (mouseenter)="SelectedRow(row , i)" *matRowDef="let row;let i = index; columns: displayedColumns;">
+      </tr>
+    </table>
+  </div>
+  <div >
+    <button mat-raised-button color="primary" (click)="onSubmit()">{{isUpdate}}</button>
+    <button mat-raised-button color="warn" (click)="GotoOders()" class="marg">
+     <mat-icon>add_shopping_cart</mat-icon> Orders</button>
+  </div>
+</form>
